@@ -1,0 +1,30 @@
+--Example table
+CREATE TABLE CUSTOMER
+(CUSTOMER_ID NUMBER(4,0) NOT NULL,
+CUSTOMER_NAME VARCHAR2(100 BYTE) NOT NULL,
+ENTRY_DATE DATE );
+
+ALTER TABLE CUSTOMER ADD CONSTRAINT PK_CUSTOMER PRIMARY KEY (CUSTOMER_ID);
+
+COMMENT ON COLUMN CUSTOMER.CUSTOMER_ID IS 'Identifier';
+
+CREATE SEQUENCE SEQ_CUSTOMER MINVALUE 1 MAXVALUE 999999999999 INCREMENT BY 1 START WITH 1 NOCACHE NOORDER NOCYCLE;
+
+
+--Create a query to return the unique rows in a table
+SELECT * FROM CUSTOMER WHERE CUSTOMER_ID = 1;
+
+
+--Write a command to insert values into a table
+INSERT INTO CUSTOMER(CUSTOMER_ID, CUSTOMER_NAME, ENTRY_DATE) 
+	VALUES(SEQ_CUSTOMER.NEXTVAL, 'RUBEN LOPEZ', SYSDATE);
+
+
+--Create a query that joins two tables together. Note, all rows from the first table must be in the 
+-- result-set (e.g. given customer and order tables, return all customers and any orders for each customer)
+
+SELECT * FROM CUSTOMER C, ORDER O WHERE C.CUSTOMER_ID (+) = O.ORDER_CUSTOMER_ID;
+
+SELECT * FROM CUSTOMER C LEFT JOIN ORDER O ON C.CUSTOMER_ID = O.ORDER_CUSTOMER_ID;
+
+
